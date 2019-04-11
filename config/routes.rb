@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+  resources :users, only: [:new, :create]
+  # resource is singular instead of resources
+  # Unlike resources, resource will create routes
+  # that do CRUD operation on only one thing. There
+  # will be no index routes and no route will have an
+  # :id wildcard. When using a singular resouce
+  # the controller name must still be plural.
+  resource :session, only: [:new, :create, :destroy]
   # resources method will generate all CRUD routes
   # following RESTful conventions for a resource.
   # It will assume there is a controller named after
@@ -12,7 +19,7 @@ Rails.application.routes.draw do
     # by a path corresponding to the passed in symbol.
     # In this case all nested routes will be
     # prefixed with '/questions/:question_id/'
-    resources :answers, only: [:create, :destroy] 
+    resources :answers, only: [:create, :destroy]
   end
   # get('/questions/new', to: 'questions#new', as: :new_question)
   # post('/questions', to: 'questions#create', as: :questions)
@@ -33,5 +40,6 @@ Rails.application.routes.draw do
   # the `as` option is used for helper url/path, it overrides or generates
   # helper method that you can use in your views or controllers
   get('/', { to: 'welcome#index', as: 'root' })
+  # root 'welcome#index'
 
 end
