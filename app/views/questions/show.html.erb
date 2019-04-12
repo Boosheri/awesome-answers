@@ -17,18 +17,20 @@
     Seen <%= pluralize(@question.view_count, "time") %>
   </small>
 </div>
-
 <div>
-  <small>
-    <%= link_to "Edit", edit_question_path(@question) %>
-  </small> |
-  <small>
-    <%= link_to(
-          "Delete", question_path(@question),
-          method: :delete,
-          data: { confirm: "Are you sure?"}
-          )%>
-  </small>
+<%# <% if  @question.user == current_user %>
+  <% if can?(:crud, @question) %>
+    <small>
+      <%= link_to "Edit", edit_question_path(@question) %>
+    </small> |
+    <small>
+      <%= link_to(
+            "Delete", question_path(@question),
+            method: :delete,
+            data: { confirm: "Are you sure?"}
+            )%>
+    </small>
+  <% end %>
 </div>
 
 <section>
@@ -58,15 +60,17 @@
         <li>
           <p>
           <%= answer.body %> <br />
-          <small>
-            <%= link_to(
-            "Delete",
-            question_answer_path(@question, answer),
-            method: :delete, data: {
-              confirm: "Are you sure?"
-            }
-            ) %>
-          </small>
+   <% if can?(:crud, answer) %>
+            <small>
+              <%= link_to(
+              "Delete",
+              question_answer_path(@question, answer),
+              method: :delete, data: {
+                confirm: "Are you sure?"
+              }
+              ) %>
+            </small>
+          <% end %>
           <small>
             Answered <%= time_ago_in_words(answer.created_at) %> ago
           </small>

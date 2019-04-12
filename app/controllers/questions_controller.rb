@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
+  before_action :authorize, only: [:edit, :update, :destroy]
 
   def new
     @question = Question.new
@@ -41,7 +42,16 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    # this ensures that other users cannot edit questions that are not their own
+    # if @question.user != current_user
+    #   redirect_to root_path, alert: "Not Authorized"
+    # end
+
+    # with cancan gem, you can write the following:
+    # if !can? :edit, @question
+    #   redirect_to root_path
   end
+end
 
   def update
     if @question.update question_params
@@ -72,4 +82,6 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-end
+  def authorize
+    redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @question)
+  end 
