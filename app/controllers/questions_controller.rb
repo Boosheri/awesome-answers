@@ -35,8 +35,12 @@ class QuestionsController < ApplicationController
     @answer = Answer.new
     # For the list of answers
     @answers = @question.answers.order(created_at: :desc)
+    @like = @question.likes.find_by(user: current_user)
   end
 
+  def index
+    @questions = Question.all.order(created_at: :desc)
+  end
   def index
     @questions = Question.all.order(created_at: :desc)
   end

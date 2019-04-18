@@ -1,4 +1,7 @@
 class Question < ApplicationRecord
+  has_many :likes, dependent: :destroy
+  has_many :likers, through: :likes, source: :user
+  
   belongs_to :user
   # This is the Question model. We generated
   # this file with the command:

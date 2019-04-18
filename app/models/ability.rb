@@ -6,7 +6,7 @@
 class Ability
   include CanCan::Ability
 
-  # CanCanCan assumes you have a method called `current_user` in available in your 
+  # CanCanCan assumes you have a method called `current_user` in available in your
   # ApplictionController (which we do). CanCanCan gets automatically initialized
   # with `current_user` passed to the `initialize` method
   def initialize(user)
@@ -15,8 +15,8 @@ class Ability
 
     # Define abilities for the passed in user here. For example:
     #
-    
-    
+
+
     user ||= User.new # guest user (not logged in)
 
     #   if user.admin?
@@ -47,8 +47,8 @@ class Ability
     #   Action
     #    ð    Class of Object
     #            ð
-    can(:crud, Question) do |question|#<-- an instance of the Question model
-
+    can(:crud, Question) do |question|
+      question.user == user
       # question.user is the owner of the question
       # user is the current user
       # If they're the same, the user can crud the question.
@@ -62,15 +62,19 @@ class Ability
     # Use the method can?() outside file to test the permissions of user.
 
     # For example:
-    # can?(:delete, answer)
-    # can?(:delete, Answer.new)
-    # can?(:delete, @answer)
+    # can?(:delete, Answer.find(10))
 
-    can :crud, Answer do |ans| #<-- an instance of the Answer model
+    can :crud, Answer do |ans|
       ans.user == user || ans.question.user == user
     end
 
+    can :crud, JobPost do |job_post|
+      job_post.user == user
+    end
 
+    can :like, Question do |question|
+      user.persisted? && question.user != user
+    end
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions
