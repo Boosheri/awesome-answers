@@ -55,6 +55,9 @@ class Question < ApplicationRecord
   # rules
 
   # To read more on validations: https://guides.rubyonrails.org/active_record_validations.html
+
+  #        Column Name   Validation        Validation
+  #           ð          ð                  ð
   validates(:title, presence: true, uniqueness: true)
 
   validates(
