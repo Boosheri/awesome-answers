@@ -43,16 +43,10 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    # this ensures that other users cannot edit questions that are not their own
-    # if @question.user != current_user
-    #   redirect_to root_path, alert: "Not Authorized"
+    # if !can?(:edit, @question)
+    #   redirect_to root_path, alert: 'Not authorized'
     # end
-
-    # with cancan gem, you can write the following:
-    # if !can? :edit, @question
-    #   redirect_to root_path
-    # end
-end
+  end
 
   def update
     if @question.update question_params
@@ -76,8 +70,7 @@ end
 
     # Then use permit to specify all input names that
     # are allowable (as symbols).
-    params.require(:question).permit(:title, :body, tag_ids: []) 
-    # we have to indicate that rails should expect an array for tag_id
+    params.require(:question).permit(:title, :body, :tag_names)
   end
 
   def find_question
@@ -86,5 +79,6 @@ end
 
   def authorize
     redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @question)
-  end 
+  end
+
 end
