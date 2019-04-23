@@ -39,7 +39,16 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.all.order(created_at: :desc)
+    if params[:tag].present?
+      @tag = Tag.find_or_initialize_by(name: params[:tag])
+      # or
+      # @tag = Tag.find_by(name: params[:tag])
+      # however the above will throw an error
+      # if it is an uninitialized tag written in the url
+      @questions = @tag.questions.order(created_at: :desc)
+    else
+      @questions = Question.all.order(created_at: :desc)
+    end
   end
 
   def edit
