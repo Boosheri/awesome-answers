@@ -41,9 +41,6 @@ class QuestionsController < ApplicationController
   def index
     @questions = Question.all.order(created_at: :desc)
   end
-  def index
-    @questions = Question.all.order(created_at: :desc)
-  end
 
   def edit
     # this ensures that other users cannot edit questions that are not their own
@@ -54,7 +51,7 @@ class QuestionsController < ApplicationController
     # with cancan gem, you can write the following:
     # if !can? :edit, @question
     #   redirect_to root_path
-  end
+    # end
 end
 
   def update
@@ -79,7 +76,8 @@ end
 
     # Then use permit to specify all input names that
     # are allowable (as symbols).
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, tag_ids: []) 
+    # we have to indicate that rails should expect an array for tag_id
   end
 
   def find_question
@@ -89,3 +87,4 @@ end
   def authorize
     redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @question)
   end 
+end

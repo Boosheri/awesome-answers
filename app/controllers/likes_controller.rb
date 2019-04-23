@@ -10,6 +10,7 @@ class LikesController < ApplicationController
         # if not can?(:like, question)
         flash[:danger] = "that's a nit narcissistic.."
         return redirect_to question_path(question)
+      end
       if like.save
         flash[:success] = "Question Liked!"
       else
@@ -28,5 +29,4 @@ class LikesController < ApplicationController
       flash[:success] = "Question Unliked!"
       redirect_to question_path(question)
     end
-  end
-  
+end
