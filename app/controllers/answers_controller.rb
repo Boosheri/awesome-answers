@@ -6,17 +6,22 @@ class AnswersController < ApplicationController
     @answer = Answer.new answer_params
     @answer.question = @question
     @answer.user = current_user
+
     if @answer.save
       # Notify question creator that they got a reply
       # using email
-      AnswerMailer.new_answer(@answer).deliver_now
+      # AnswerMailer.new_answer(@answer).deliver_now
+      AnswerMailer.new_answer(@answer).deliver_later(wait: 5.seconds)
+
       redirect_to question_path(@question)
     else
+
       # For the list of answers
       @answers = @question.answers.order(created_at: :desc)
       render 'questions/show'
     end
   end
+
 
   def destroy
     @answer = Answer.find(params[:id])

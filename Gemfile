@@ -32,7 +32,8 @@ gem 'faker'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.3.1'
 gem "selectize-rails"
-gem "letter_opener"
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
@@ -58,6 +59,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'hirb'
+gem "letter_opener"
 end
 
 
