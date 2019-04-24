@@ -28,11 +28,11 @@ gem 'cancancan'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'cowsay'
 gem 'pry-rails'
-gem 'faker''
+gem 'faker'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.3.1'
 gem "selectize-rails"
-
+gem "letter_opener"
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
