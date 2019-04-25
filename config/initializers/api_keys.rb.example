@@ -1,0 +1,2 @@
+ENV["EMAIL_USERNAME"] = "Add Gmail Username here"
+ENV["EMAIL_PASSWORD"] = "Add your Gmail password here"
