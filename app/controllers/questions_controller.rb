@@ -36,6 +36,11 @@ class QuestionsController < ApplicationController
     # For the list of answers
     @answers = @question.answers.order(created_at: :desc)
     @like = @question.likes.find_by(user: current_user)
+
+    respond_to do |format|
+      format.html { render }
+      format.json { render json: @question }
+    end
   end
 
   def index
@@ -43,8 +48,6 @@ class QuestionsController < ApplicationController
       @tag = Tag.find_or_initialize_by(name: params[:tag])
       # or
       # @tag = Tag.find_by(name: params[:tag])
-      # however the above will throw an error
-      # if it is an uninitialized tag written in the url
       @questions = @tag.questions.order(created_at: :desc)
     else
       @questions = Question.all.order(created_at: :desc)
