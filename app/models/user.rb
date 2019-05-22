@@ -1,10 +1,30 @@
 class User < ApplicationRecord
+# To learn more about ActiveStorage, go to:
+  # https://edgeguides.rubyonrails.org/active_storage_overview.html
+  
+  # To setup attachments or uploads, first generate
+  # a migration to create tables needed by
+  # ActiveStorage:
+  # rails active_storage:install
+
+  # Then, run your migration.
+
+  # To support multiple file attachements, do:
+  has_many_attached(:avatars)
+
+  # To support a single file attachement, do:
+  # has_one_attached :avatar
+
+
+  # If ActiveJob is setup, you will need to run your worker:
+  # rails jobs:work
+
   has_many :likes, dependent: :destroy
-    #          ð
+  #          ð
   #          \--------------------------\
   #                                     ð
-  has_many :liked_questions, through: :likes, source: :question 
-    # `has_many` can take a `through` named argument to create a
+  has_many :liked_questions, through: :likes, source: :question
+  # `has_many` can take a `through` named argument to create a
   # many-to-many relationship via another `has_many` declaration.
 
   # We specify the name of another `has_many` with the `through`
@@ -13,7 +33,6 @@ class User < ApplicationRecord
 
   # We must also provide a `source` named argument to specify
   # which model we're getting back from the many-to-many relationship.
-#name is arbritrary
 
   has_many :questions, dependent: :nullify
   has_many :answers, dependent: :nullify

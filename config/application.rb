@@ -44,7 +44,7 @@ module AwesomeAnswers
         # "origins" method specifies which domains are allowed
         # to make AJAX requests to this server.
         # "*" means all domains and should be avoided.
-        origins("localhost:3030")
+        origins("127.0.0.1:5500", "localhost:3030")
 
         resource(
           # Only routes that begin with /api/ are accessible

@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::ApplicationController
-    before_action :authenticate_user!, only: [ :current ]
+    before_action :authenticate_user!, only: [ :current, :update ]
   
     def current
       render json: current_user
@@ -18,9 +18,29 @@ class Api::V1::UsersController < Api::ApplicationController
       end
     end
   
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    def update
+      if params[:id] == "current"
+        user = current_user
+      else
+        user = User.find params[:id]
+      end
+      user.update!(user_params)
+      render(
+        json: { status: 200 }
+      )
     end
-  
+
+    private
+
+  def user_params
+    params.require(:user).permit(
+      :first_name, 
+      :last_name, 
+      :email, 
+      :password, 
+      :password_confirmation,
+      avatars: []
+    )
   end
+end
   
