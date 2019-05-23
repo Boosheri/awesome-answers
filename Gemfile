@@ -36,6 +36,8 @@ gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 gem 'active_model_serializers'
 gem 'rack-cors'
+gem 'stripe'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
+  resources :users, shallow: true, only: [:new, :create, :show] do
+    # The shallow:true named argument will seperate routes
+    # that require the parent from ones that don't.
+    # Routes that require the parent (e.g. index, new, create)
+    # will not change.
+    # Routes that don't require the parent (e.g. show, edit, update, destroy) will have the parent prefix removed
+    # (e.g. /users/:user_id)
+    resources :gifts, only: [:new, :create] do
+      resources :payments, only: [:new, :create]
+    end
+  end
   # GET /api/v1/questions -> questions#index
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :questions
@@ -25,7 +37,7 @@ Rails.application.routes.draw do
   resources :job_posts, only: [:new, :create, :show, :destroy]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :users, only: [:new, :create]
+
   # resource is singular instead of resources
   # Unlike resources, resource will create routes
   # that do CRUD operation on only one thing. There
