@@ -25,18 +25,27 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'cancancan'
+
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'cowsay'
 gem 'pry-rails'
 gem 'faker'
+
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.3.1'
 gem "selectize-rails"
+
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
+
 gem 'active_model_serializers'
 gem 'rack-cors'
+
 gem 'stripe'
+
+gem "geocoder"
+gem "gmaps4rails"
+gem "underscore-rails"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
