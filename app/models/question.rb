@@ -7,7 +7,6 @@ class Question < ApplicationRecord
   # same as the source singularized (i.e. tag), the source
   # named argument can be omitted.
 
-
   belongs_to :user
   # This is the Question model. We generated
   # this file with the command:
@@ -111,6 +110,8 @@ class Question < ApplicationRecord
   # is equivalent to:
   scope(:search, ->(query) { where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%") })
 
+  scope(:viewable, -> { where(aasm_state: [:published, :answered, :not_answered])})
+
 
   def tag_names
     self.tags.map{ |t| t.name }.join(", ")
@@ -127,9 +128,46 @@ class Question < ApplicationRecord
   # of the '=' would become the argument to the method.
   def tag_names=(rhs)
     self.tags = rhs.strip.split(/\s*,\s*/).map do |tag_name|
+      # Finds the first record with given
+      # attributes, or initializes a record
+      # (Tag.new) with attributes if one is
+      # not found.
       Tag.find_or_initialize_by(name: tag_name)
     end
   end
+
+
+  include AASM
+
+   aasm whiny_transitions: false do
+     state :draft, initial: true
+     state :published
+     state :cancelled
+     state :answered
+     state :not_answered
+     state :archived
+
+     event :publish do
+       transitions from: :draft, to: :published
+     end
+
+     event :cancel do
+       transitions from: [:published, :not_answered, :answered], to: :cancelled
+     end
+
+     event :archive do
+       transitions to: :archived
+     end
+
+     event :answer do
+       transitions from: [:not_answered, :published], to: :answered
+     end
+
+     event :no_answer do
+       transitions from: :published, to: :not_answered
+     end
+
+   end
 
   private
 

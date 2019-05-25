@@ -75,6 +75,10 @@ class Ability
     can :like, Question do |question|
       user.persisted? && question.user != user
     end
+
+    can :publish, Question do |question|
+      user == question.user
+    end
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions

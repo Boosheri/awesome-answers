@@ -47,6 +47,8 @@ gem "geocoder"
 gem "gmaps4rails"
 gem "underscore-rails"
 
+gem 'aasm'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

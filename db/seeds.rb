@@ -53,6 +53,7 @@ tags = Tag.all
     view_count: rand(100_000),
     created_at: created_at,
     updated_at: created_at,
+    aasm_state: [:draft, :published, :answered, :not_answered, :locked, :archived].sample,
     user: users.sample
   )
 
@@ -72,5 +73,5 @@ answers = Answer.all
 puts Cowsay.say("Generated #{ questions.count } questions", :ghostbusters)
 puts Cowsay.say("Generated #{ answers.count } answers", :stegosaurus)
 puts Cowsay.say("Generated #{ tags.count } tags", :moose)
-puts Cowsay.say("Generated #{ users.count } users", :kitty)
+puts Cowsay.say("Generated #{ users.count } users", :beavis)
 puts Cowsay.say("Login with #{super_user.email} and password: #{PASSWORD}", :koala)
